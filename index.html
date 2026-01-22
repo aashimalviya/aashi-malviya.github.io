@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aashi</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Playfair+Display:wght@400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-yH8I+1Wx0Khj5r6+Po5eS9+4lIpjlNqJrZsmD5HEvhX+jp+RYlFzjRkqk5o7z8G3gQ8gLo+2Q8Vb5G73D4x2vA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%, #e1f5fe 100%);
+      color: #1a3a52;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .page-wrapper {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Background Decoration */
+    .bg-decoration {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-shape {
+      position: absolute;
+      opacity: 0.06;
+      border-radius: 50%;
+    }
+
+    .bg-shape:nth-child(1) {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, #1976d2, transparent);
+      top: -100px;
+      right: -100px;
+    }
+
+    .bg-shape:nth-child(2) {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, #42a5f5, transparent);
+      bottom: -80px;
+      left: -80px;
+    }
+
+    /* Header */
+    header {
+      padding: 2.5rem 0 2rem;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(25, 118, 210, 0.1);
+      box-shadow: 0 2px 10px rgba(25, 118, 210, 0.05);
+      z-index: 1;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.05em;
+      color: #1565c0;
+    }
+
+    nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: #37474f;
+      text-decoration: none;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: #1976d2;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* Layout */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1rem;
+      z-index: 1;
+      flex-direction: column;
+    }
+
+    .hero-home {
+      display: grid;
+      grid-template-columns: 45% 55%;
+      max-width: 1200px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(25, 118, 210, 0.15);
+      animation: fadeIn 1s ease-out;
+    }
+
+    /* Image Section */
+    .hero-image-section {
+      position: relative;
+      overflow: hidden;
+      background: #1976d2;
+    }
+
+    .hero-image-section img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .hero-image-section:hover img {
+      transform: scale(1.05);
+    }
+
+    .hero-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(25, 118, 210, 0.3), rgba(66, 165, 245, 0.2));
+    }
+
+    /* Text Section */
+    .hero-text-section {
+      padding: 4rem 3.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .line {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      line-height: 1.4;
+      margin-bottom: 2rem;
+    }
+
+    .line-accent {
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #1976d2, #42a5f5);
+      border-radius: 2px;
+    }
+
+    /* Writing + About + Connect */
+    .hero-writing,
+    .hero-about,
+    .hero-connect {
+      display: none;
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 3rem;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(25, 118, 210, 0.15);
+      animation: fadeIn 1s ease-out;
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    .author-photo,
+    .about-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #1976d2;
+      margin-bottom: 1.5rem;
+    }
+
+    .writing-list {
+      list-style: none;
+      margin-top: 2rem;
+    }
+
+    .writing-list li {
+      margin-bottom: 1.5rem;
+    }
+
+    .writing-list a {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: #37474f;
+      text-decoration: none;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 2.5rem;
+      padding: 1rem 2.5rem;
+      background: #1976d2;
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      background: #1565c0;
+      transform: translateY(-2px);
+    }
+
+    /* Connect Section Links with icons */
+    .connect-links {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+
+    .connect-links a {
+      font-family: 'Lato', sans-serif;
+      font-size: 1rem;
+      color: white;
+      background: #1976d2;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .connect-links a:hover {
+      background: #1565c0;
+      transform: translateY(-2px);
+    }
+
+    /* Times New Roman for Writing & About headings */
+    .hero-writing h2,
+    .hero-about h2 {
+      font-family: 'Times New Roman', Times, serif;
+    }
+
+    /* Footer */
+    footer {
+      padding: 2rem;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.7);
+      border-top: 1px solid rgba(25, 118, 210, 0.1);
+      z-index: 1;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-home {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-text-section {
+        padding: 2.5rem;
+      }
+
+      .line {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="bg-decoration">
+    <div class="bg-shape"></div>
+    <div class="bg-shape"></div>
+  </div>
+
+  <div class="page-wrapper">
+
+    <header>
+      <div class="header-inner">
+        <h1 class="logo">Aashi Malviya</h1>
+        <nav>
+          <a href="#home">Home</a>
+          <a href="#writing">Writing</a>
+          <a href="#about">About</a>
+          <a href="#connect">Connect</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+
+      <!-- HOME -->
+      <section class="hero-home" id="home-section">
+        <div class="hero-image-section">
+          <img src="bookstore.jpg" alt="Aashi in a bookstore" loading="lazy">
+          <div class="hero-image-overlay"></div>
+        </div>
+
+        <div class="hero-text-section">
+          <p class="line">
+            Everything that exists here<br>
+            was once someone’s thought.
+          </p>
+          <span class="line-accent"></span>
+        </div>
+      </section>
+
+      <!-- WRITING -->
+      <section class="hero-writing" id="writing-section">
+        <img src="aashi.jpg" alt="Aashi" class="author-photo">
+        <h2>These are the words I have let into the world</h2>
+
+        <ul class="writing-list">
+          <li><a href="#">Chai on a Moving Train</a></li>
+          <li><a href="#">Silent Stations</a></li>
+          <li><a href="#">The Stranger Who Listened</a></li>
+        </ul>
+
+        <a href="#home" class="back-link">← Back Home</a>
+      </section>
+
+      <!-- ABOUT -->
+      <section class="hero-about" id="about-section">
+        <img src="aashi.jpg" alt="Aashi" class="about-photo">
+        <h2>About the Author</h2>
+
+        <p>
+          I'm Aashi Malviya, a writer who believes stories are bridges between strangers.
+          I collect moments, conversations, and silences — and turn them into places people can rest.
+        </p>
+
+        <a href="#home" class="back-link">← Back Home</a>
+      </section>
+
+      <!-- LET'S CONNECT -->
+<section class="hero-connect" id="connect-section">
+  <h2>Let's Connect</h2>
+  <p>I'd love to hear from you. Follow or email me!</p>
+
+  <div class="connect-links">
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/_aashimalviya_/" target="_blank" rel="noopener">
+      <i class="fab fa-instagram"></i> Instagram
+    </a>
+
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/in/aashi-malviya" target="_blank" rel="noopener">
+      <i class="fab fa-linkedin"></i> LinkedIn
+    </a>
+
+    <!-- Gmail -->
+    <a href="https://mail.google.com/mail/?view=cm&to=aashi.penandpages@gmail.com" target="_blank" rel="noopener">
+      <i class="fas fa-envelope"></i> Gmail
+    </a>
+  </div>
+
+  <a href="#home" class="back-link">← Back Home</a>
+</section>
+
+<!-- Add Font Awesome CDN just before closing </body> tag -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+      <section class="hero-connect" id="connect-section">
+        <h2>Let's Connect</h2>
+        <p>I'd love to hear from you. Follow or email me!</p>
+        <div class="connect-links">
+          <a href="https://www.instagram.com/_aashimalviya_/" target="_blank" rel="noopener">
+            <i class="fab fa-instagram"></i> Instagram
+          </a>
+          <a href="https://www.linkedin.com/in/aashi-malviya" target="_blank" rel="noopener">
+            <i class="fab fa-linkedin"></i> LinkedIn
+          </a>
+          <a href="mailto:aashi.penandpages@gmail.com">
+            <i class="fas fa-envelope"></i> Gmail
+          </a>
+        </div>
+        <a href="#home" class="back-link">← Back Home</a>
+      </section>
+
+    </main>
+
+    <footer>
+      <p>© Aashi Malviya</p>
+    </footer>
+
+  </div>
+
+  <script>
+    const home = document.getElementById('home-section');
+    const writing = document.getElementById('writing-section');
+    const about = document.getElementById('about-section');
+    const connect = document.getElementById('connect-section');
+
+    document.querySelectorAll('nav a, .back-link').forEach(link => {
+      link.addEventListener('click', e => {
+        const target = link.getAttribute('href');
+
+        if (target === '#writing') {
+          e.preventDefault();
+          home.style.display = 'none';
+          writing.style.display = 'block';
+          about.style.display = 'none';
+          connect.style.display = 'none';
+        }
+
+        if (target === '#about') {
+          e.preventDefault();
+          home.style.display = 'none';
+          writing.style.display = 'none';
+          about.style.display = 'block';
+          connect.style.display = 'none';
+        }
+
+        if (target === '#connect') {
+          e.preventDefault();
+          home.style.display = 'none';
+          writing.style.display = 'none';
+          about.style.display = 'none';
+          connect.style.display = 'block';
+        }
+
+        if (target === '#home') {
+          e.preventDefault();
+          home.style.display = 'grid';
+          writing.style.display = 'none';
+          about.style.display = 'none';
+          connect.style.display = 'none';
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  </script>
+
+</body>
+</html>
